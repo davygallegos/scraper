@@ -28,19 +28,19 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/scraper", { useNewUrlParser: true });
+mongoose.connect("mongodb://localhost/mlbscraper", { useNewUrlParser: true });
 
 // Routes
 
 // A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
   // First, we grab the body of the html with axios
-  axios.get("http://news.mit.edu/mit-news").then(function(response) {
+  axios.get("https://www.mlb.com/").then(function(response) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(response.data);
 
     // Now, we grab every li within an div tag, and do the following:
-    $("h3").each(function(i, element) {
+    $(".p-headline-stack__list .p-headline-stack__link").each(function(i, element) {
       // Save an empty result object
       var result = {};
       console.log(result)
