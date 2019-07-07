@@ -1,2 +1,2 @@
-# scraper
-MIT news
+XBox One News Scrapper
+
