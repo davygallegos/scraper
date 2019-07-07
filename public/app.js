@@ -10,8 +10,8 @@ $.getJSON("/articles", function(data) {
   
   // Whenever someone clicks a p tag
   $(document).on("click", "p", function() {
-    // Empty the comments from the note section
-    $("#comments").empty();
+    // Empty the notes from the note section
+    $("#notes").empty();
     // Save the id from the p tag
     var thisId = $(this).attr("data-id");
   
@@ -24,13 +24,13 @@ $.getJSON("/articles", function(data) {
       .then(function(data) {
         console.log(data);
         // The title of the article
-        $("#comments").append("<h2>" + data.title + "</h2>");
+        $("#notes").append("<h2>" + data.title + "</h2>");
         // An input to enter a new title
-        $("#comments").append("<input id='titleinput' name='title' >");
+        $("#notes").append("<input id='titleinput' name='title' >");
         // A textarea to add a new note body
-        $("#comments").append("<textarea id='bodyinput' name='body'></textarea>");
+        $("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
         // A button to submit a new note, with the id of the article saved to it
-        $("#comments").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
+        $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
   
         // If there's a note in the article
         if (data.note) {
@@ -62,8 +62,8 @@ $.getJSON("/articles", function(data) {
       .then(function(data) {
         // Log the response
         console.log(data);
-        // Empty the comments section
-        $("#comments").empty();
+        // Empty the notes section
+        $("#notes").empty();
       });
   
     // Also, remove the values entered in the input and textarea for note entry

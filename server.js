@@ -2,7 +2,6 @@ var express = require("express");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 
-
 // Our scraping tools
 // Axios is a promised-based http library, similar to jQuery's Ajax method
 // It works on the client and on the server
@@ -12,7 +11,7 @@ var cheerio = require("cheerio");
 // Require all models
 var db = require("./models");
 
-var PORT = 3000;
+var PORT = 3001;
 
 // Initialize Express
 var app = express();
@@ -28,22 +27,25 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/mlbscraper", { useNewUrlParser: true });
+mongoose.connect("mongodb://localhost/xbox", { useNewUrlParser: true });
 
 // Routes
 
 // A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
   // First, we grab the body of the html with axios
-  axios.get("https://www.mlb.com/").then(function(response) {
+    axios.get("https://old.reddit.com/r/xboxone/").then(function(response) {
+
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(response.data);
 
-    // Now, we grab every li within an div tag, and do the following:
-    $(".p-headline-stack__list .p-headline-stack__link").each(function(i, element) {
+    // Now, we grab every h2 within an article tag, and do the following:
+    // $("li div h3").each(function(i, element) {
+      $("p.title").each(function(i, element) {
+
       // Save an empty result object
       var result = {};
-      console.log(result)
+
       // Add the text and href of every link, and save them as properties of the result object
       result.title = $(this)
         .children("a")
@@ -121,5 +123,5 @@ app.post("/articles/:id", function(req, res) {
 
 // Start the server
 app.listen(PORT, function() {
-  console.log("App running on port " + PORT + "3000");
+  console.log("App running on port " + PORT + "!");
 });
